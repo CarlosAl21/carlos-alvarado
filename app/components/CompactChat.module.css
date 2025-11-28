@@ -76,8 +76,8 @@
 
 /* botón trigger cuando está minimizado */
 .trigger {
-  width: 64px;
-  height: 64px;
+  width: 86px;
+  height: 86px;
   border-radius: 10px;
   border: none;
   background: rgba(35,40,42,0.98);
@@ -88,7 +88,10 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   cursor: pointer;
 }
-.trigger img { width:46px; height:46px; border-radius:6px; object-fit:cover; }
+.trigger img { width:68px; height:68px; border-radius:6px; object-fit:cover; }
+.trigger {
+  position: relative;
+}
 
 /* panel abierto: limitar altura para que nunca se salga del viewport */
 .panel {
@@ -182,4 +185,24 @@
 /* ajustar en móvil */
 @media (max-width:520px) {
   .hint { display:none; } /* opcional: ocultar en móvil */
+}
+
+/* Badge de notificación sobre el avatar */
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #ef4444; /* rojo */
+  color: white;
+  border-radius: 999px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 0 6px;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.35);
+  z-index: 2; /* asegurar que quede encima del avatar */
+  pointer-events: none;
 }
