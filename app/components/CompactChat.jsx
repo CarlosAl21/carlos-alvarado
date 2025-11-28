@@ -15,18 +15,19 @@ export default function CompactChat() {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState(null);
+  // Por defecto mostramos el badge para indicar que es un chat
+  // (el usuario puede cambiar esto si prefiere que no aparezca inicialmente)
+  const [unread, setUnread] = useState(true); // <-- nuevo estado para badge
   const boxRef = useRef(null);
 
   useEffect(() => {
-    if (open && boxRef.current)
-      boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    if (open && boxRef.current) boxRef.current.scrollTop = boxRef.current.scrollHeight;
   }, [open, messages]);
 
   function pushMessage(from, txt) {
-    setMessages((s) => [
-      ...s,
-      { id: Date.now() + Math.random(), from, text: txt },
-    ]);
+    setMessages((s) => [...s, { id: Date.now() + Math.random(), from, text: txt }]);
+    // si viene un mensaje del bot y el panel está cerrado -> marcar como no leído
+    if (from === "bot" && !open) setUnread(true);
   }
 
   function validEmail(e) {
@@ -67,11 +68,7 @@ export default function CompactChat() {
   }
 
   return (
-    <div
-      className={styles.wrapper}
-      aria-live="polite"
-      style={{ position: "fixed" }}
-    >
+    <div className={styles.wrapper} aria-live="polite" style={{ position: "fixed" }}>
       {/* Panel se renderiza primero (encima del trigger) para que aparezca hacia arriba */}
       {open && (
         <div className={styles.panel} role="dialog" aria-label="Chat compacto">
@@ -139,9 +136,7 @@ export default function CompactChat() {
               {status && (
                 <div
                   className={
-                    status.type === "error"
-                      ? styles.statusErr
-                      : styles.statusOk
+                    status.type === "error" ? styles.statusErr : styles.statusOk
                   }
                 >
                   {status.text}
@@ -155,7 +150,13 @@ export default function CompactChat() {
       {/* Trigger siempre en el DOM; toggle al hacer click */}
       <button
         className={styles.trigger}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() =>
+          setOpen((v) => {
+            const next = !v;
+            if (next) setUnread(false); // abrir -> limpiar badge
+            return next;
+          })
+        }
         aria-label={open ? "Cerrar chat" : "Abrir chat"}
         style={{ zIndex: 100001 }}
       >
@@ -163,6 +164,7 @@ export default function CompactChat() {
           src="https://avatars.githubusercontent.com/u/108234879?s=400&u=445c9a7bef72f07f514549448544eae06e12a2e2&v=4"
           alt="avatar"
         />
+        {unread && <span className={styles.badge}>1</span>}{/* badge sobre el avatar */}
       </button>
     </div>
   );
