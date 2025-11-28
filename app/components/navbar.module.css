@@ -1,0 +1,154 @@
+/* navbar.module.css */
+.steamHeader { 
+  background: var(--steam-dark); 
+  color: var(--steam-text); 
+}
+
+.steamTopbar { 
+  border-bottom: 1px solid rgba(255,255,255,0.03); 
+}
+
+.steamContainer {
+  max-width: 1100px;
+  margin: 0 auto; /* De aqui se le coloca a la izquierda el navbar */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 16px;
+  gap: 40px;
+}
+
+.steamLeft {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.steamNavLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.steamNavArrows {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.steamArrowButton {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--steam-text);
+  padding: 6px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.steamArrowButton:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.07);
+}
+
+.steamCenter {
+  display: flex;
+}
+
+.steamNavList {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 10px; /* separación a la izquierda */
+  align-items: center;
+  
+}
+
+.steamNavItem {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.steamNavLink {
+  color: var(--steam-text);
+  text-decoration: none;
+  padding: 10px 0;
+  display: inline-block;
+  opacity: 0.9;
+}
+
+.steamNavItem:hover .steamNavLink {
+  color: #fff;
+  opacity: 1;
+}
+
+.steamActive .steamNavLink {
+  color: var(--steam-accent);
+  position: relative;
+}
+
+
+.steamActive .steamNavLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steam-accent), var(--steam-blue));
+  border-radius: 2px;
+}
+
+.steamRight {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.steamUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--steam-text);
+  font-size: 13px;
+}
+
+.steamAvatar {
+  background: transparent;
+  color: var(--steam-accent);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.steamBalance {
+  background: rgba(255,255,255,0.02);
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+.steamAccentBar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--steam-accent), var(--steam-blue));
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .steamContainer {
+    padding: 8px;
+  }
+  
+  .steamNavList {
+    gap: 16px;
+  }
+  
+  .steamRight {
+    display: none;
+  }
+}

@@ -1,0 +1,185 @@
+.container { position: relative; display: inline-block; z-index: 60; }
+.compact {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background: rgba(3,10,18,0.5);
+  border:1px solid rgba(255,255,255,0.04);
+  color: var(--steam-text);
+  padding:6px 8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.avatar { width:44px; height:44px; border-radius:8px; object-fit:cover; border:2px solid rgba(255,255,255,0.03); }
+.name { font-weight:700; font-size:13px; color:var(--steam-text); }
+.panel {
+  /* antes: position:absolute; right: calc(100% + 12px); top: 0; */
+  position: absolute;
+  right: 0;                           /* alinear al borde del trigger */
+  bottom: calc(100% + 12px);          /* colocar el panel arriba del avatar/trigger */
+  width: 320px;
+  max-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(18,24,36,0.98), rgba(10,14,20,0.95));
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(2,8,15,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  overflow: hidden;
+  transform-origin: bottom right; /* origen en el borde inferior para animaciones */
+}
+.form { display:flex; flex-direction:column; gap:8px; }
+.label { font-size:12px; color:#cfe3ff; display:flex; flex-direction:column; gap:6px; }
+.input, .textarea {
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.04);
+  color: var(--steam-text);
+  padding:8px;
+  border-radius:6px;
+  font-size:13px;
+}
+.textarea { resize:vertical; min-height:80px; }
+.actions { display:flex; gap:8px; justify-content:flex-end; margin-top:4px; }
+.send {
+  background: linear-gradient(90deg,#66c0f4,#1b6eff);
+  color:#fff;
+  padding:8px 10px;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+}
+.send[disabled] { opacity:0.5; cursor:default; }
+.cancel {
+  background: transparent;
+  color:#cfe3ff;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:8px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.statusOk { margin-top:8px; color:#b6f2c6; font-size:13px; }
+.statusErr { margin-top:8px; color:#ffd6d6; font-size:13px; }
+@media (max-width:880px) { .panel { right: auto; left: 0; width: 90vw; } }
+
+.wrapper {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;           /* moved to top-right */
+  z-index: 99999;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  display: flex;
+  flex-direction: column; /* trigger above, panel below */
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+/* botón trigger cuando está minimizado */
+.trigger {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(35,40,42,0.98);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.trigger img { width:46px; height:46px; border-radius:6px; object-fit:cover; }
+
+/* panel abierto: limitar altura para que nunca se salga del viewport */
+.panel {
+  width: 320px;
+  max-height: calc(100vh - 56px);
+  display:flex;
+  flex-direction:column;
+  background: linear-gradient(180deg, rgba(18,24,36,0.98), rgba(10,14,20,0.95));
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(2,8,15,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  overflow: hidden;
+  transform-origin: top right; /* panel se desplegará hacia abajo */
+}
+
+/* header */
+.header { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid rgba(255,255,255,0.03); }
+.hLeft { display:flex; gap:10px; align-items:center; }
+.hLeft img { width:36px; height:36px; border-radius:6px; object-fit:cover; }
+.title { color:#eaf2ff; font-weight:700; }
+.actions { display:flex; align-items:center; gap:8px; }
+.minBtn { background:transparent; border:none; color:#cfe8ff; font-size:16px; cursor:pointer; }
+
+/* mensajes: tomar el espacio disponible dentro del panel y scroll interno */
+.messages {
+  padding:10px;
+  overflow-y:auto;
+  flex: 1 1 auto;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  -webkit-overflow-scrolling: touch;
+}
+.msgBot { align-self:flex-start; max-width:85%; }
+.msgYou { align-self:flex-end; max-width:85%; }
+.msgText { padding:8px 10px; border-radius:8px; background: rgba(255,255,255,0.03); color:#eaf2ff; font-size:13px; }
+.msgYou .msgText { background: linear-gradient(90deg,#2f9bd6,#1f6fb4); color:#fff; }
+
+/* formulario (email + mensaje) */
+.formArea {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:10px;
+  border-top:1px solid rgba(255,255,255,0.02);
+  background: linear-gradient(180deg, rgba(0,0,0,0.03), transparent);
+  flex-shrink: 0;
+}
+.emailInput, .textarea {
+  width:100%;
+  box-sizing:border-box;
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.02);
+  color:#eef2f5;
+  outline:none;
+  font-size:13px;
+}
+.emailInput { height:36px; }
+.textarea { min-height:72px; max-height: 160px; resize:vertical; }
+
+/* acciones y estado */
+.rowActions { display:flex; align-items:center; gap:8px; }
+.sendBtn { background:#1b6b9a; color:#fff; padding:8px 10px; border-radius:6px; border:none; cursor:pointer; font-weight:600; }
+.statusOk { color:#7ed08b; font-size:13px; }
+.statusErr { color:#ff9b9b; font-size:13px; }
+
+/* responsive: en móvil mantener en top y ajustar ancho */
+@media (max-width:520px) {
+  .panel { width: 92vw; max-height: calc(100vh - 40px); right: 4vw; }
+  .wrapper { right: 8px; top: 8px; } /* top en vez de bottom */
+}
+
+/* hint (etiqueta sobre el trigger) */
+.hint {
+  background: rgba(27,87,135,0.95);
+  color: #eaf6ff;
+  font-weight:600;
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  margin-bottom:6px; /* separa del trigger */
+  transform-origin: bottom right;
+  white-space:nowrap;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+/* ajustar en móvil */
+@media (max-width:520px) {
+  .hint { display:none; } /* opcional: ocultar en móvil */
+}

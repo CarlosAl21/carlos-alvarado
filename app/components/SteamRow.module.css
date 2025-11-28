@@ -1,0 +1,107 @@
+.row { margin: 18px 0; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.title { font-size:18px; margin:0; color:var(--steam-text); }
+.viewMore {
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:6px 10px;
+  border-radius:6px;
+  color:#9fcfff;
+}
+
+.list {
+  display:flex;
+  gap:12px;
+  overflow-x:auto; /* se mantiene para que las flechas + touch sigan funcionando */
+  padding-bottom:6px;
+  scroll-behavior:smooth;
+
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.list::-webkit-scrollbar { /* Chrome, Safari, Opera */
+  display: none;
+}
+
+/* small rows también */
+.smallRows .row {
+  gap: 10px;
+  padding-bottom: 8px;
+  display: flex;
+  overflow-x: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.smallRows .row::-webkit-scrollbar { display: none; }
+
+.card {
+  min-width:200px;
+  background: rgba(3,10,18,0.45);
+  border-radius:6px;
+  overflow:hidden;
+  flex:0 0 auto;
+}
+
+.thumb {
+  height:110px;
+  background: linear-gradient(90deg,#02101a,#08202b);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#7fb3ff;
+}
+
+.cardBody { padding:8px; color:var(--steam-text); }
+
+.placeholder {
+  padding:30px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* controles de fila (flechas) */
+.rowControls { display:flex; gap:8px; align-items:center; }
+.rowNav {
+  background: rgba(0,0,0,0.45);
+  color: var(--steam-text);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.rowNav[disabled] { opacity:0.35; cursor:default; }
+
+/* asegurar que la imagen/logo dentro de la tarjeta se ajuste al contenedor */
+.card img, .thumb img, .SteamCard-module__J4qkCG__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* mantiene proporción y se ajusta al contenedor */
+  display:block;
+}
+
+/* en smallCard (mini-rows) también se adaptan */
+.smallCard img { width: 100%; height: 100%; object-fit: contain; display:block; }
+
+/* asegurar que la miniatura (background-image) cubra y centre */
+.SteamRow-module__Mxhiqa__thumb {
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+  display: flex;
+
+  background-size: cover;       /* important: fill the area */
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* imágenes <img> dentro de tarjetas/miniaturas (logos) */
+.SteamRow-module__Mxhiqa__card img,
+.SteamRow-module__Mxhiqa__thumb img,
+.SteamRow-module__Mxhiqa__SteamCard-module__J4qkCG__thumb img,
+.SteamRow-module__Mxhiqa__smallCard img {
+  object-fit: contain; /* logos no se recortan ni deforman */
+  width: 50%;
+  height: 150%;
+  display: block;
+}
