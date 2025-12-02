@@ -1,10 +1,10 @@
 .card {
-  background: rgba(3,10,18,0.48);
-  border-radius: 6px;
+  /* reducido y más responsivo */
+  width: clamp(140px, 16vw, 190px);
+  aspect-ratio: var(--ar, 16/9);
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
   overflow: hidden;
-  min-width: 180px;
-  cursor: pointer;
-  transition: transform .16s ease, box-shadow .16s ease;
   display: flex;
   flex-direction: column;
 }
@@ -61,4 +61,34 @@
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* centra la miniatura y limita el tamaño del logo/imagen para que no ocupe todo */
+.cardMedia {
+  width: 100px;
+  height: 100px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  background: transparent; /* optional: keep previous gradient in .thumb only */
+}
+
+/* enforce icon dimensions */
+.cardMedia img,
+.thumb img,
+.card img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+}
+
+/* metadata debajo */
+.cardBody {
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  font-size: 0.9rem;
 }

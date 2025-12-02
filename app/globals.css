@@ -54,3 +54,8 @@ main, header, .steamHeader {
 .price { color:#7de26b; font-weight:600; }
 .smallRows .row { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; }
 .smallCard { min-width:180px; height:110px; background:rgba(2,7,12,.4); border-radius:6px; display:flex; align-items:center; justify-content:center; }
+
+/* force global page background to black so fixed/translucent layers never reveal white */
+html, body, #__next {
+  background-color: #000;
+}

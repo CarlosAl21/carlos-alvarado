@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './navbar.module.css';
 import CompactChat from "./CompactChat";
+import React, { useRef, useEffect, useState } from "react"; // added imports
 
 export default function Navbar() {
   const pathname = usePathname() || '/';
@@ -13,6 +14,25 @@ export default function Navbar() {
   
   const goForward = () => {
     if (typeof window !== 'undefined') window.history.forward();
+  };
+
+  // new: detect visual order so clicks always match the visible arrows
+  const arrowsRef = useRef(null);
+  const [reversed, setReversed] = useState(false);
+  useEffect(() => {
+    const el = arrowsRef.current;
+    if (!el) return;
+    const st = getComputedStyle(el).flexDirection || "";
+    setReversed(st.includes("row-reverse"));
+  }, []);
+
+  const handleBackClick = () => {
+    if (reversed) goForward();
+    else goBack();
+  };
+  const handleForwardClick = () => {
+    if (reversed) goBack();
+    else goForward();
   };
 
   const navItems = [
@@ -28,13 +48,13 @@ export default function Navbar() {
           <div className={styles.steamContainer}>
             {/* Left section - arrows + navigation */}
             <div className={styles.steamLeft}>
-              <div className={styles.steamNavArrows}>
-                <button aria-label="Atrás" onClick={goBack} className={styles.steamArrowButton}>
+              <div className={styles.steamNavArrows} ref={arrowsRef}>
+                <button aria-label="Atrás" onClick={handleBackClick} className={styles.steamArrowButton} title="Atrás">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" />
                   </svg>
                 </button>
-                <button aria-label="Adelante" onClick={goForward} className={styles.steamArrowButton}>
+                <button aria-label="Adelante" onClick={handleForwardClick} className={styles.steamArrowButton} title="Adelante">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                     <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" />
                   </svg>

@@ -1,0 +1,22 @@
+.wrap {
+  transition: opacity 320ms cubic-bezier(.2,.8,.2,1), transform 320ms cubic-bezier(.2,.8,.2,1);
+  will-change: opacity, transform;
+}
+
+/* entering: slide in from right + settle */
+.enter {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* exiting: fade out while shifting slightly right and scaling down */
+.exit {
+  opacity: 0;
+  transform: translateX(10px) scale(0.98);
+  pointer-events: none;
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .wrap { transition: none !important; transform: none !important; }
+}

@@ -8,3 +8,67 @@
 .price { color:#7de26b; font-weight:600; }
 .smallRows .row { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; }
 .smallCard { min-width:180px; height:110px; background:rgba(2,7,12,.4); border-radius:6px; display:flex; align-items:center; justify-content:center; }
+
+/* Page layout improvements: container, spacing, section visuals */
+.page {
+  max-width: 1120px;
+  margin: 24px auto;
+  padding: 0 18px;
+  display: block;
+}
+
+/* Hero: more breathing room and subtle glass */
+.hero {
+  padding: 28px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(3,10,18,0.35), rgba(5,18,30,0.18));
+  box-shadow: 0 6px 30px rgba(2,8,20,0.48);
+  margin-bottom: 28px;
+}
+
+/* Section wrapper */
+.section {
+  margin-bottom: 22px;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* Section title */
+.sectionTitle {
+  font-size: 18px;
+  margin: 6px 0 14px;
+  color: var(--steam-text);
+  font-weight: 700;
+}
+
+/* grid for featured blocks (keeps SteamRow intact) */
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* subtle utility classes */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* make rows breathe */
+.row {
+  padding: 6px 4px;
+}
+
+/* make footer sit nicely on page */
+.footerSpacer {
+  height: 24px;
+}
+
+/* small screens adjustments */
+@media (max-width: 720px) {
+  .hero { padding: 18px; }
+  .page { margin: 12px auto; padding: 0 12px; }
+}

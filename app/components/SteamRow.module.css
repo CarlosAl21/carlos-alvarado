@@ -105,3 +105,45 @@
   height: 150%;
   display: block;
 }
+
+/* Force all item icons to match social icon rendered size (100x100) */
+.cardMedia {
+  width: 100px;          /* explicit box for icon */
+  height: 100px;         /* match rendered size shown in inspector */
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;            /* no extra padding so icon fits exact box */
+  box-sizing: border-box;
+}
+
+/* images inside cards (logos / skillicons) */
+.card img,
+.thumb img,
+.cardMedia img,
+.SteamRow-module__Mxhiqa__thumb img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain; /* preserve aspect and center inside the box */
+  display: block;
+}
+
+/* keep card body & layout unchanged */
+.card {
+  min-width: 140px; /* keep tile sizing for horizontal scrolling */
+  background: rgba(3,10,18,0.45);
+  border-radius: 6px;
+  overflow: hidden;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
