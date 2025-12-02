@@ -73,20 +73,20 @@ export default function CV() {
             <img src="https://c.tenor.com/92MplgQwb80AAAAC/tenor.gif" alt="Cat coding GIF" width="80" />
           </div>
           <div style={{ marginTop: 12 }}>
-            <img
+            {/* <img
               src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&center=true&lines=Software+Engineer+Student;Full-Stack+Developer;Backend+Specialist;Always+learning+new+things"
               alt="Typing SVG"
               style={{ width: "100%", maxWidth: 720, height: 50 }}
-            />
+            /> */}
           </div>
         </div>
         {/* ----- /Hero ----- */}
               <h3>🚀 About me</h3>
 
               {/* right-side decorative gif (como en README) */}
-              <div style={{ float: "right", marginLeft: 12 }}>
+              {/* <div style={{ float: "right", marginLeft: 12 }}>
                 <img src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Right_Side.gif?raw=true" width={180} alt=" decoration " />
-              </div>
+              </div> */}
 
               <p className={styles.lead}>
                 I am an enthusiastic <strong>Software Engineering student</strong> (23) with a strong foundation in <strong>Full-Stack Development</strong>, currently specializing in building robust and scalable systems through <strong>Backend development</strong> and database architecture.
@@ -175,12 +175,12 @@ export default function CV() {
 
         {/* Música / footer visual del README */}
         <div style={{ marginTop: 18 }}>
-          <img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%" alt="" />
+          {/* <img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%" alt="" /> */}
           <div style={{ textAlign: "center", marginTop: 8 }}>
-            <p>🎵Lo Que Ha Estado Sonando🎵</p>
+            <p>Lo Que Ha Estado Sonando</p>
             <img src="https://spotify-recently-played-readme.vercel.app/api?user=12154863792&count=5" alt="Spotify recent" style={{ maxWidth: "100%" }} />
           </div>
-            <img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%" alt="" style={{ marginTop: 12 }} />
+            {/* <img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%" alt="" style={{ marginTop: 12 }} /> */}
           </div>
         </div>
         </div>
