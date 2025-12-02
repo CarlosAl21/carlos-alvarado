@@ -1,5 +1,6 @@
 "use client";
-import styles from './SteamCard.module.css';
+import React, { useCallback } from "react";
+import styles from "./SteamRow.module.css";
 
 /**
  * @typedef {{ id: string|number, title?: string, subtitle?: string, price?: string, badge?: string, image?: string }} SteamItem
@@ -10,16 +11,30 @@ import styles from './SteamCard.module.css';
  * @param {{ item: SteamItem, onClick?: (id: string|number)=>void }} props
  */
 export default function SteamCard({ item = {}, onClick = () => {} }) {
+  // onLoad calcula ratio y lo coloca como variable CSS --ar en el contenedor .card
+  const onImgLoad = useCallback((e) => {
+    const img = e.currentTarget;
+    const w = img.naturalWidth || img.width || 16;
+    const h = img.naturalHeight || img.height || 9;
+    const card = img.closest("[class*='card']"); // busca el wrapper .card (scoped)
+    if (card) card.style.setProperty("--ar", `${w}/${h}`);
+  }, []);
+
   return (
-    <article className={styles.card} onClick={() => onClick(item.id)}>
-      <div className={styles.thumb} style={{ backgroundImage: item.image ? `url(${item.image})` : undefined }}>
-        {!item.image && <span className={styles.thumbLabel}>{item.title || 'Imagen'}</span>}
-        {item.badge && <span className={styles.badge}>{item.badge}</span>}
+    // nota: el wrapper externo en SteamRow ya usa styles.card (aspect-ratio + width)
+    <article className={styles.article}>
+      <div className={styles.cardMedia}>
+        <img
+          src={item.image}
+          alt={item.title}
+          onLoad={onImgLoad}
+          decoding="async"
+        />
       </div>
-      <div className={styles.body}>
-        <div className={styles.title}>{item.title || 'Título del juego'}</div>
-        <div className={styles.subtitle}>{item.subtitle || 'Subtítulo / desarrollador'}</div>
-        {item.price && <div className={styles.price}>{item.price}</div>}
+
+      <div className={styles.cardBody}>
+        <h4 className={styles.cardTitle}>{item.title}</h4>
+        {item.subtitle && <p className={styles.cardSubtitle}>{item.subtitle}</p>}
       </div>
     </article>
   );

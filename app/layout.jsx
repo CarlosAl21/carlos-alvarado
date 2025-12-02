@@ -3,6 +3,7 @@ import Navbar from "./components/navbar";
 import ChatWidget from "./components/ChatWidget";
 import CompactChat from "./components/CompactChat";
 import Footer from "./components/Footer";
+import PageTransition from "./components/PageTransition";
 
 export const metadata = {
   title: "Carlos Alvarado",
@@ -14,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body>
         <Navbar />
-        <main>{children}</main>
+        <PageTransition>{children}</PageTransition>
 
         {/* Chat flotante global: siempre en el DOM */}
         <CompactChat />

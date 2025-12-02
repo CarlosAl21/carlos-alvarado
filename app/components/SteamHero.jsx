@@ -113,6 +113,9 @@ export default function SteamHero({ items = [] }) {
   return (
     <section className={styles.hero} ref={rootRef}>
       <div className={styles.left}>
+        <h2 style={{ textAlign: 'left' }}>
+          Proyectos Recientes
+        </h2>
         <div
           className={styles.carousel}
           onMouseEnter={stopAuto}

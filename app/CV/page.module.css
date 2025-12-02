@@ -222,17 +222,75 @@
   gap:12px;
 }
 
-/* Responsive: en pantallas pequeñas apilar */
-@media (max-width: 1100px) {
-  .panel { padding:16px; }
-  .mainRow { flex-direction:column; gap:12px; }
-  .rightCol { width:100%; position:static; }
-  .leftCol { max-width:100%; }
-  .certItem img { width:64px; height:64px; }
+/* Background video layer: fixed to viewport so it always cubre y es responsive */
+.bgWrapper {
+  position: fixed;     /* fixed to viewport */
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;          /* below page content, navbar/footer must have z-index > 0 */
+  background-color: #000;
 }
 
-/* responsive: reducir intensidad overlay en pantallas pequeñas */
-@media (max-width: 700px) {
-	.videoOverlay { background: rgba(6,10,16,0.55); }
-	.bgVideo { object-position: center top; }
+/* Video fill */
+.bgVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.60;
+  pointer-events: none;
+  filter: brightness(0.92) saturate(1.02);
+}
+
+/* Ensure page content sits above the fixed video */
+.container,
+.panel {
+  position: relative;
+  z-index: 2;
+}
+
+/* If navbar/footer get covered, give them higher stacking order */
+/* Example (add to your navbar/footer css if needed):
+.navbar { position: relative; z-index: 30; }
+.footer { position: relative; z-index: 30; }
+*/
+/* máscara fija entre el video (z=0) y el contenido (z=2) para simular bordes negros */
+.bgMask {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* entre video (0) y contenido (2) */
+  pointer-events: none;
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0) 10%),
+    linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0) 10%),
+    linear-gradient(to right, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0) 6%),
+    linear-gradient(to left, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0) 6%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: opacity 250ms ease;
+}
+
+/* menos intensidad en pantallas pequeñas */
+@media (max-width: 768px) {
+  .bgMask {
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 8%),
+      linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 8%),
+      linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 4%),
+      linear-gradient(to left, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 4%);
+  }
+}
+
+/* respetar reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .bgMask { transition: none; }
 }

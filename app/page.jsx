@@ -25,135 +25,153 @@ const heroItems = [
   },
 ];
 
+// Usar skillicons (los mismos del README) para cada categoría
 const rows = [
-  // Lenguajes (añadí image: logo-badge)
+  // Languages
   [
-    {
-      id: "lang-sql",
-      title: "SQL",
-      subtitle: "Bases de datos",
-      image:
-        "https://img.shields.io/badge/-SQL-386B94?style=flat&logo=mysql&logoColor=white",
-    },
     {
       id: "lang-js",
       title: "JavaScript",
-      subtitle: "Lenguaje",
-      image:
-        "https://img.shields.io/badge/-JavaScript-323330?style=flat&logo=javascript&logoColor=F7DF1E",
+      subtitle: "Language",
+      image: "https://skillicons.dev/icons?i=js",
     },
     {
       id: "lang-ts",
       title: "TypeScript",
-      subtitle: "Lenguaje",
-      image:
-        "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
+      subtitle: "Language",
+      image: "https://skillicons.dev/icons?i=ts",
     },
     {
       id: "lang-java",
       title: "Java",
-      subtitle: "Lenguaje",
-      image:
-        "https://img.shields.io/badge/-Java-ED8B00?style=flat&logo=openjdk&logoColor=white",
+      subtitle: "Language",
+      image: "https://skillicons.dev/icons?i=java",
     },
     {
       id: "lang-kotlin",
       title: "Kotlin",
-      subtitle: "Lenguaje",
-      image:
-        "https://img.shields.io/badge/-Kotlin-7F52FF?style=flat&logo=kotlin&logoColor=white",
+      subtitle: "Language",
+      image: "https://skillicons.dev/icons?i=kotlin",
     },
     {
       id: "lang-html",
       title: "HTML5",
       subtitle: "Markup",
-      image:
-        "https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white",
+      image: "https://skillicons.dev/icons?i=html",
     },
     {
       id: "lang-css",
       title: "CSS3",
-      subtitle: "Estilos",
-      image:
-        "https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white",
+      subtitle: "Styles",
+      image: "https://skillicons.dev/icons?i=css",
     },
   ],
 
-  // Frameworks / librerías (image: logo-badge)
+  // Frameworks & Libraries
   [
     {
       id: "fw-node",
       title: "Node.js",
       subtitle: "Backend",
-      image:
-        "https://img.shields.io/badge/-Node.js-339933?style=flat&logo=nodedotjs&logoColor=white",
+      image: "https://skillicons.dev/icons?i=nodejs",
     },
     {
       id: "fw-nest",
       title: "NestJS",
       subtitle: "Backend",
-      image:
-        "https://img.shields.io/badge/-NestJS-E0234E?style=flat&logo=nestjs&logoColor=white",
+      image: "https://skillicons.dev/icons?i=nestjs",
     },
     {
       id: "fw-react",
       title: "React",
       subtitle: "Frontend",
-      image:
-        "https://img.shields.io/badge/-React-20232A?style=flat&logo=react&logoColor=61DAFB",
+      image: "https://skillicons.dev/icons?i=react",
     },
     {
       id: "fw-next",
       title: "Next.js",
       subtitle: "Frontend",
-      image:
-        "https://img.shields.io/badge/-Next.js-000000?style=flat&logo=nextdotjs&logoColor=white",
+      image: "https://skillicons.dev/icons?i=nextjs",
     },
     {
       id: "fw-rn",
       title: "React Native",
       subtitle: "Mobile",
-      image:
-        "https://img.shields.io/badge/-React_Native-20232A?style=flat&logo=react&logoColor=61DAFB",
+      image: "https://skillicons.dev/icons?i=react",
     },
     {
       id: "fw-ionic",
       title: "Ionic",
       subtitle: "Mobile",
-      image:
-        "https://img.shields.io/badge/-Ionic-3880FF?style=flat&logo=ionic&logoColor=white",
+      image: "https://icons.veryicon.com/png/o/business/vscode-program-item-icon/ionic-4.png",
+    },
+    {
+      id: "fw-godot",
+      title: "Godot",
+      subtitle: "Game Engine",
+      image: "https://skillicons.dev/icons?i=godot",
     },
   ],
 
-  // Bases de datos (image: logo-badge)
+  // Databases
   [
     {
       id: "db-postgres",
       title: "PostgreSQL",
-      subtitle: "Base de datos",
-      image:
-        "https://img.shields.io/badge/-PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white",
+      subtitle: "DB",
+      image: "https://skillicons.dev/icons?i=postgresql",
     },
     {
       id: "db-mongo",
       title: "MongoDB",
       subtitle: "NoSQL",
-      image:
-        "https://img.shields.io/badge/-MongoDB-4EA94B?style=flat&logo=mongodb&logoColor=white",
+      image: "https://skillicons.dev/icons?i=mongodb",
     },
     {
       id: "db-mysql",
       title: "MySQL",
-      subtitle: "Base de datos",
-      image:
-        "https://img.shields.io/badge/-MySQL-005C84?style=flat&logo=mysql&logoColor=white",
+      subtitle: "DB",
+      image: "https://skillicons.dev/icons?i=mysql",
     },
     {
-      id: "db-xampp",
-      title: "XAMPP",
-      subtitle: "Servidor local",
-      image:
-        "https://img.shields.io/badge/-XAMPP-F37623?style=flat&logo=xampp&logoColor=white",
+      id: "db-sqlite",
+      title: "SQLite",
+      subtitle: "DB",
+      image: "https://skillicons.dev/icons?i=sqlite",
+    },
+  ],
+
+  // Tools / Design
+  [
+    {
+      id: "tool-figma",
+      title: "Figma",
+      subtitle: "Design",
+      image: "https://skillicons.dev/icons?i=figma",
+    },
+    {
+      id: "tool-ai",
+      title: "Illustrator",
+      subtitle: "Design",
+      image: "https://skillicons.dev/icons?i=ai",
+    },
+    {
+      id: "tool-vscode",
+      title: "VSCode",
+      subtitle: "Editor",
+      image: "https://skillicons.dev/icons?i=vscode",
+    },
+    {
+      id: "tool-git",
+      title: "Git",
+      subtitle: "VCS",
+      image: "https://skillicons.dev/icons?i=git",
+    },
+    {
+      id: "tool-postman",
+      title: "Postman",
+      subtitle: "API",
+      image: "https://skillicons.dev/icons?i=postman",
     },
   ],
 ];
@@ -164,21 +182,21 @@ const categories = [
     name: "GitHub",
     url: "https://github.com/CarlosAl21",
     image:
-      "https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github&logoColor=white",
+      "https://skillicons.dev/icons?i=github",
   },
   {
     id: "c-linkedin",
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/carlos-alvarado-859a33365",
     image:
-      "https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white",
+      "https://skillicons.dev/icons?i=linkedin",
   },
   {
     id: "c-instagram",
     name: "Instagram",
     url: "https://www.instagram.com/carlos.alvarado.21?igsh=M3Qxdm9nNzJvY2xm",
     image:
-      "https://img.shields.io/badge/-Instagram-E4405F?style=flat&logo=instagram&logoColor=white",
+      "https://skillicons.dev/icons?i=instagram",
   },
 ];
 
@@ -226,15 +244,17 @@ export default function Page() {
   return (
     <main className="bg-[url('./img/SteamBackground.png')] min-h-screen bg-no-repeat bg-cover bg-fixed">
       <div className="max-w-[1250px] mx-auto px-4">
-        <h2 className="text-sm font-bold text-white mb-0">
-          PROYECTOS RECIENTES
-        </h2>
+
         <SteamHero />
+
         <section className="mt-8">
-          <SteamRow title="Lenguajes que manejo" items={rows[0]} />
-          <SteamRow title="Frameworks y librerías" items={rows[1]} />
-          <SteamRow title="Bases de datos" items={rows[2]} />
+          {/* Ahora usamos skillicons para cada fila */}
+          <SteamRow title="Languages" items={rows[0]} />
+          <SteamRow title="Frameworks & Libraries" items={rows[1]} />
+          <SteamRow title="Databases" items={rows[2]} />
+          <SteamRow title="Tools & Design" items={rows[3]} />
         </section>
+
         <CategoryCarousel items={categories} className="mt-10" />
         {/* <FeaturedGrid items={featured} className="mt-10" /> */}
       </div>
