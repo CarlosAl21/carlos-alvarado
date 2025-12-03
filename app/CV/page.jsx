@@ -210,9 +210,7 @@ export default function CV() {
             </div>
             <iframe src="https://drive.google.com/file/d/1tdMJaPMEkAxk-FkV33yevOJubtUVw9Dl/preview" title="CV PDF" style={{ width: "100%", height: "100%", border: 0 }} />
           </div>
-          
         </div>
-        
       )}
     </main>
   );
