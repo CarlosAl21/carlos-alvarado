@@ -3,6 +3,13 @@ import { useRef, useState, useEffect } from 'react';
 import styles from './SteamRow.module.css';
 import SteamCard from './SteamCard';
 
+// importa imágenes locales como URLs
+const CTTImg = new URL('../img/fotos proyectos/CTT.png', import.meta.url).toString();
+const VetcontrolImg = new URL('../img/fotos proyectos/Vetcontrol.jpg', import.meta.url).toString();
+const IESImg = new URL('../img/fotos proyectos/IES.png', import.meta.url).toString();
+const Ruta593Img = new URL('../img/fotos proyectos/Ruta 593.png', import.meta.url).toString();
+const PillaroImg = new URL('../img/fotos proyectos/Pillaro.png', import.meta.url).toString();
+
 export default function SteamRow({ title = '', items = [] }) {
   const trackRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
@@ -56,11 +63,27 @@ export default function SteamRow({ title = '', items = [] }) {
             </div>
           ))
         ) : (
-          items.map(item => (
-            <div key={item.id} className={styles.card}>
-              <SteamCard item={item} />
-            </div>
-          ))
+          // Enriquecer cada item con image local si aplica
+          items.map(item => {
+            const localImages = {
+              'PaginaWebCTT': CTTImg,
+              'vet-control_backend': VetcontrolImg,
+              'Backend-IES': IESImg,
+              'backend-ruta593': Ruta593Img,
+              'Backend_Cementerio_Pillaro': PillaroImg,
+            };
+
+            // usar item.image si ya viene, sino intentar por title o id
+            const lookupKey = item.title || item.id || '';
+            const local = localImages[lookupKey];
+            const itemWithImage = local ? { ...item, image: item.image || local } : item;
+
+            return (
+              <div key={item.id} className={styles.card}>
+                <SteamCard item={itemWithImage} />
+              </div>
+            );
+          })
         )}
       </div>
     </section>
