@@ -85,7 +85,13 @@ export default function SteamHero({ items = [] }) {
         const repos = await resp.json();
 
         const filtered = (Array.isArray(repos) ? repos : [])
-          .filter(r => r && r.name && r.name !== 'CarlosAl21')
+          .filter(r => {
+            if (!r || !r.name) return false;
+            const name = String(r.name).toLowerCase();
+            // excluir cuentas/repos que no queremos mostrar (case-insensitive)
+            const excluded = ['carlosal21', 'carlos-alvarado'];
+            return !excluded.includes(name);
+          })
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
         // MAPA DE IMÁGENES LOCALES POR NOMBRE DE REPOSITORIO
