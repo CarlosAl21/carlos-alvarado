@@ -2,6 +2,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from './page.module.css';
 
+// importa imágenes locales como URLs
+const CTTImg = new URL('../img/fotos proyectos/CTT.png', import.meta.url).toString();
+const VetcontrolImg = new URL('../img/fotos proyectos/Vetcontrol.jpg', import.meta.url).toString();
+const IESImg = new URL('../img/fotos proyectos/IES.png', import.meta.url).toString();
+// Variantes de Ruta 593: mantiene solo la que sí existe en disco ("Ruta 593.png")
+const Ruta593Img = new URL('../img/fotos proyectos/Ruta 593.png', import.meta.url).toString();
+const PillaroImg = new URL('../img/fotos proyectos/Pillaro.png', import.meta.url).toString();
+
 export default function Proyectos(){
 	// estado repos
 	const [repos, setRepos] = useState([]);
@@ -11,6 +19,20 @@ export default function Proyectos(){
 
 	useEffect(() => {
 		let abort = false;
+
+		// helper: intenta varias URLs locales y devuelve la primera que responde OK
+		async function firstAvailableUrl(candidates = []) {
+			for (const url of candidates) {
+				try {
+					const res = await fetch(url, { method: 'HEAD' });
+					if (res && res.ok) return url;
+				} catch (e) {
+					// ignora y prueba la siguiente
+				}
+			}
+			return null;
+		}
+
 		async function load() {
 			setLoading(true);
 			try {
@@ -20,19 +42,41 @@ export default function Proyectos(){
 				if (!resp.ok) throw new Error(`GitHub API error: ${resp.status}`);
 				const data = await resp.json();
 				if (abort) return;
-				const filtered = (Array.isArray(data) ? data : [])
-					.filter(r => r && r.name)
-					.map(r => ({
+
+				// mapa de candidatos (array) por nombre de repo
+				const localCandidates = {
+					'PaginaWebCTT': [CTTImg],
+					'vet-control_backend': [VetcontrolImg],
+					'Backend-IES': [IESImg],
+					'backend-ruta593': [Ruta593Img], // usar solo la ruta válida
+					'Backend_Cementerio_Pillaro': [PillaroImg],
+				};
+
+				const arr = (Array.isArray(data) ? data : []).filter(r => r && r.name);
+				// resolver imágenes locales (comprobando existencia) en paralelo
+				const mapped = await Promise.all(arr.map(async (r) => {
+					// elegir candidatos para este repo (si no hay, vacío)
+					const candidates = localCandidates[r.name] || [];
+					let imageUrl = null;
+					if (candidates.length) {
+						imageUrl = await firstAvailableUrl(candidates);
+					}
+					// fallback a picsum si no se encontró local
+					if (!imageUrl) imageUrl = `https://picsum.photos/seed/${encodeURIComponent(r.name)}/600/320`;
+
+					return {
 						id: r.id || r.name,
 						title: r.name,
 						subtitle: r.description || '',
 						language: r.language || '',
 						badge: r.stargazers_count ? `${r.stargazers_count}★` : undefined,
-						image: `https://picsum.photos/seed/${encodeURIComponent(r.name)}/600/320`,
+						image: imageUrl,
 						url: r.html_url,
 						updated_at: r.updated_at
-					}));
-				setRepos(filtered);
+					};
+				}));
+
+				if (!abort) setRepos(mapped);
 			} catch (e) {
 				if (!abort) setError(e.message || "Error cargando repos");
 			} finally {
@@ -71,7 +115,6 @@ export default function Proyectos(){
 	const gridStyle = { display: 'grid', gridTemplateColumns: 'repeat(6, 220px)', justifyContent: 'center', gap: 28, paddingBottom: 24 };
 
 	const cardStyle = { width: 220, background: '#23282a', borderRadius: 8, overflow: 'hidden', boxShadow: '0 6px 18px rgba(0,0,0,0.5)', flex: '0 0 auto', textDecoration: 'none', color: 'inherit' };
-	const coverStyle = (url) => ({ height: 200, width: '100%', backgroundImage: `linear-gradient(rgba(0,0,0,0.24), rgba(0,0,0,0.24)), url(${url})`, backgroundSize: 'cover', backgroundPosition: 'center' });
 	const metaStyle = { padding: 14 };
 	const titleStyle = { fontWeight: 600, fontSize: 15, color: '#eef2f5', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
 	const subtitleStyle = { fontSize: 12, color: '#a3a9ac', marginTop: 6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' };
@@ -89,9 +132,29 @@ export default function Proyectos(){
 
 	// Card: mostrar descripción en el subtítulo; luego fecha (primera línea) y lenguaje (segunda línea)
 	function Card({item}) {
+		// fallback URL helper (same pattern used cuando no hay local)
+		const picsum = `https://picsum.photos/seed/${encodeURIComponent(item.title || item.id)}/600/320`;
+
 		return (
 			<a href={item.url} target="_blank" rel="noopener noreferrer" style={cardStyle}>
-				<div style={coverStyle(item.image)} />
+				{/* reemplazamos el background-image por un IMG con object-fit para mejor ajuste y manejo de errores */}
+				<div style={{ position: 'relative', height: 200, width: '100%', overflow: 'hidden' }}>
+					<img
+						src={item.image || picsum}
+						alt={item.title || ''}
+						onError={(e) => {
+							// evitar loop: solo reemplazar una vez
+							if (!e.target.dataset.failed) {
+								e.target.dataset.failed = '1';
+								e.target.src = picsum;
+							}
+						}}
+						style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', transform: 'translateZ(0)' }}
+					/>
+					{/* overlay suave para legibilidad */}
+					<div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.12))', pointerEvents: 'none' }} />
+				</div>
+
 				<div style={metaStyle}>
 					<div style={titleStyle}>{item.title}</div>
 					<div style={subtitleStyle}>{item.subtitle}</div>

@@ -152,7 +152,6 @@ export default function CV() {
             {/* CV PDF: ver / descargar */}
             <div className={styles.card} style={{ marginTop: 12 }}>
               <h4>📄 CV </h4>
-              <p className={styles.small}>Haz clic para ver mi CV.</p>
               <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                 <button className={styles.linkBtn} onClick={() => setShowPdf(true)} aria-label="Ver CV">Ver CV</button>
               </div>

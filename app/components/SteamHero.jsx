@@ -3,6 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './SteamHero.module.css';
 import SteamCard from './SteamCard';
 
+// importa imágenes locales como URLs (evita problemas con el uso directo en backgroundImage)
+const CTTImg = new URL('../img/fotos proyectos/CTT.png', import.meta.url).toString();
+const VetcontrolImg = new URL('../img/fotos proyectos/Vetcontrol.jpg', import.meta.url).toString();
+const IESImg = new URL('../img/fotos proyectos/IES.png', import.meta.url).toString();
+const Ruta593Img = new URL('../img/fotos proyectos/Ruta 593.png', import.meta.url).toString();
+const PillaroImg = new URL('../img/fotos proyectos/Pillaro.png', import.meta.url).toString();
+
 export default function SteamHero({ items = [] }) {
   // placeholders por defecto (si no hay items ni github)
   const defaultSlides = [
@@ -81,15 +88,30 @@ export default function SteamHero({ items = [] }) {
           .filter(r => r && r.name && r.name !== 'CarlosAl21')
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
+        // MAPA DE IMÁGENES LOCALES POR NOMBRE DE REPOSITORIO
+        const localImages = {
+          'PaginaWebCTT': CTTImg,
+          'vet-control_backend': VetcontrolImg,
+          'Backend-IES': IESImg,
+          'backend-ruta593': Ruta593Img,
+          'Backend_Cementerio_Pillaro': PillaroImg,
+        };
+
         // limitar a MAX_SLIDES
-        const mapped = filtered.slice(0, MAX_SLIDES).map(r => ({
-          id: r.id || r.name,
-          title: r.name,
-          subtitle: r.language || (r.description ? r.description.slice(0, 80) : ''),
-          badge: r.stargazers_count ? `${r.stargazers_count}★` : undefined,
-          image: `https://picsum.photos/seed/${encodeURIComponent(r.name)}/800/450`,
-          url: r.html_url
-        }));
+        const mapped = filtered.slice(0, MAX_SLIDES).map(r => {
+          // preferir imagen local si existe para ese repo, si no fallback a picsum
+          const local = localImages[r.name];
+          const imageUrl = local ? local : `https://picsum.photos/seed/${encodeURIComponent(r.name)}/800/450`;
+
+          return {
+            id: r.id || r.name,
+            title: r.name,
+            subtitle: r.language || (r.description ? r.description.slice(0, 80) : ''),
+            badge: r.stargazers_count ? `${r.stargazers_count}★` : undefined,
+            image: imageUrl,
+            url: r.html_url
+          };
+        });
 
         if (!abort && mapped.length) {
           setSlides(mapped);
@@ -139,11 +161,34 @@ export default function SteamHero({ items = [] }) {
                   rel={s.url ? "noopener noreferrer" : undefined}
                   onClick={(e) => { if (!s.url) e.preventDefault(); }}
                 >
-                  <div className={styles.slideContent}>
+                  {/* asegurar que el contenido esté por encima de la imagen */}
+                  <div className={styles.slideContent} style={{ position: 'relative', zIndex: 2 }}>
                     <h2 className={styles.slideTitle}>{s.title}</h2>
                     <p className={styles.slideSubtitle}>{s.subtitle}</p>
                   </div>
-                  {s.image && <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${s.image})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.6 }} aria-hidden="true" />}
+
+                  {/* Imagen de fondo: usar <img> con object-fit para que siempre ajuste al contenedor */}
+                  {s.image && (
+                    <>
+                      <img
+                        src={s.image}
+                        alt=""
+                        aria-hidden="true"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                          zIndex: 0,
+                          filter: 'brightness(0.55)' // opcional: oscurecer para legibilidad
+                        }}
+                      />
+                      {/* overlay ligero separado (opcional) */}
+                      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'rgba(2,8,18,0.18)', zIndex: 1 }} />
+                    </>
+                  )}
                 </a>
               </div>
             ))}
